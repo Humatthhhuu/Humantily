@@ -714,18 +714,6 @@ spawn(function()
     end
 end)
 
-local CoreGui = game:GetService("StarterGui")
-CoreGui:SetCore("SendNotification", {
-    Title = "Ar Drak Hub",
-    Text = "By _Libbi",
-    Icon = "rbxassetid://18844143031",
-    Duration = math.huge,
-    Callback = AllowRunServiceBind,
-    Button1 = "",
-    Button2 = "",
-})
-
-
 game.Players.LocalPlayer.Character.ChildAdded:Connect(function(tools)
     if tools:IsA("Tool") then
         if tools:FindFirstChild("HackerSo1TheGioi") or tools:FindFirstChild("Attack") or tools:FindFirstChild("HackerDepTreai") then 
