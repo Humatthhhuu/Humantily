@@ -1,8 +1,3 @@
-]]
--By Hungtu
--Discord
-]]
-
 repeat wait() until game:IsLoaded()
 
 function TP(pos)
