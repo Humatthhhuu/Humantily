@@ -455,21 +455,7 @@ local Slider = Tabs.DMTab:AddSlider("Slider", {
             game.Players.LocalPlayer.Character.Humanoid.JumpPower = Value
         end
     })
-    
-    Tabs.DMTab:AddButton({
-        Title = "RemoveFog",
-        Description = "",
-        Callback = function()
-game.Lighting.FogEnd = 100000
-game.Lighting.FogStart = 0
-game.Lighting.ClockTime = 14
-game.Lighting.Brightness = 2
-game.Lighting.GlobalShadows = false
-        end
-    })
-    
-    
-    
+   
     function fixQuest()
     if game.Players.LocalPlayer.PlayerGui:FindFirstChild("QuestTake") then
         for i,v in pairs(game.Players.LocalPlayer.PlayerGui:GetDescendants()) do
