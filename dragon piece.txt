@@ -1,0 +1,935 @@
+repeat wait() until game:IsLoaded()
+
+function TP(pos)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end
+
+function Click()
+    game:GetService'VirtualUser':Button1Down(Vector2.new(0.9,0.9))
+    game:GetService'VirtualUser':Button1Up(Vector2.new(0.9,0.9))
+end
+
+
+function EquipWeapon(ToolSe)
+    if game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe) then
+        getgenv().tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
+        wait()
+        game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
+    end
+end
+
+function UnEquipWeapon(ToolSess)
+    if game.Players.LocalPlayer.Character:FindFirstChild(ToolSess) then
+        getgenv().toolun = game.Players.LocalPlayer.Character:FindFirstChild(ToolSess)
+        wait()
+        game.Players.LocalPlayer.Character.Humanoid:UnequipTools(toolun)
+    end
+end
+
+wait(0.1)
+
+local Weaponlist = {}
+function Update()
+    for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do
+        table.insert(Weaponlist,v.Name)
+    end   
+end
+
+Update()
+
+function isnil(thing)
+return (thing == nil)
+end
+local function round(n)
+return math.floor(tonumber(n) + 0.5)
+end
+Number = math.random(1, 1000000)
+function UpdatePlayerChams()
+for i,v in pairs(game:GetService'Players':GetChildren()) do
+    pcall(function()
+        if not isnil(v.Character) then
+            if ESPPlayer then
+                if not isnil(v.Character.Head) and not v.Character.Head:FindFirstChild('NameEsp'..Number) then
+                    local bill = Instance.new('BillboardGui',v.Character.Head)
+                    bill.Name = 'NameEsp'..Number
+                    bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                    bill.Size = UDim2.new(1,500,1,30)
+                    bill.Adornee = v.Character.Head
+                    bill.AlwaysOnTop = true
+                    local name = Instance.new('TextLabel',bill)
+                    name.Font = Enum.Font.GothamSemibold
+                    name.FontSize = "Size10"
+                    name.TextWrapped = true
+                    name.Text = (v.Name ..' \n'.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance')
+                    name.Size = UDim2.new(1,0,1,0)
+                    name.TextYAlignment = 'Top'
+                    name.BackgroundTransparency = 1
+                    name.TextStrokeTransparency = 0.5
+                    if v.Team == game.Players.LocalPlayer.Team then
+                        name.TextColor3 = Color3.new(255,255,255)
+                    else
+                        name.TextColor3 = Color3.new(255,255,255)
+                    end
+                else
+                    v.Character.Head['NameEsp'..Number].TextLabel.Text = (v.Name ..' | '.. round((game:GetService('Players').LocalPlayer.Character.Head.Position - v.Character.Head.Position).Magnitude/3) ..' Distance\nHealth : ' .. round(v.Character.Humanoid.Health*100/v.Character.Humanoid.MaxHealth) .. '%')
+                end
+            else
+                if v.Character.Head:FindFirstChild('NameEsp'..Number) then
+                    v.Character.Head:FindFirstChild('NameEsp'..Number):Destroy()
+                end
+            end
+        end
+    end)
+end
+end
+
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+
+local flyingEnabled = false -- Set to true to start flying, false to stop flying
+local flySpeed = 130 -- Adjust fly speed as needed
+
+-- Function to start flying
+local function startFlying()
+    local bodyGyro = Instance.new("BodyGyro")
+    local bodyVelocity = Instance.new("BodyVelocity")
+
+    bodyGyro.P = 9e4
+    bodyGyro.maxTorque = Vector3.new(9e4, 9e4, 9e4)
+    bodyGyro.cframe = humanoidRootPart.CFrame
+    bodyGyro.Parent = humanoidRootPart
+
+    bodyVelocity.velocity = Vector3.new(0, 0, 0)
+    bodyVelocity.maxForce = Vector3.new(9e4, 9e4, 9e4)
+    bodyVelocity.Parent = humanoidRootPart
+
+    while flyingEnabled do
+        local moveDirection = Vector3.new()
+        local camera = workspace.CurrentCamera
+        local cameraCFrame = camera.CFrame
+
+        -- WASD controls for movement
+        if player.Character.Humanoid.MoveDirection.Magnitude > 0 then
+            moveDirection = cameraCFrame:VectorToWorldSpace(Vector3.new(player.Character.Humanoid.MoveDirection.X, player.Character.Humanoid.MoveDirection.Y, player.Character.Humanoid.MoveDirection.Z))
+        end
+
+        bodyVelocity.velocity = moveDirection * flySpeed
+        bodyGyro.cframe = cameraCFrame
+
+        wait() -- Wait for the next frame
+    end
+
+    -- Clean up after flying is disabled
+    bodyGyro:Destroy()
+    bodyVelocity:Destroy()
+end
+
+-- Function to toggle flying on or off
+local function toggleFlying(state)
+    flyingEnabled = state
+    if flyingEnabled then
+        startFlying()
+    end
+end
+
+-- Example usage
+toggleFlying()
+
+
+local Fluent = loadstring(game:HttpGet("https://raw.githubusercontent.com/Hungtu2121/ArDrakxHub/main/Fluent%20(2).txt"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "Mera Hub| Game : Dragon Piece ",
+    SubTitle = "| Beta ",
+    TabWidth = 95,
+    Size = UDim2.fromOffset(480, 380),
+    Acrylic = false,
+    Theme = "Darker",
+    MinimizeKey = Enum.KeyCode.F15
+})
+
+--   Dark   Light  Aqua Amethyst
+local Tabs = {
+    MainTab = Window:AddTab({ Title = "Tab Auto Farm", Icon = "" }),
+}
+
+local MiscFarm = Tabs.MainTab:AddSection("Tab Boss Admmin")
+
+local Toggle = Tabs.MainTab:AddToggle("MyToggle", {Title = "Fast Attack Addmin", Default = false })
+
+    Toggle:OnChanged(function(e)
+        cbcvv = e
+        huhuhu = e
+        bnbnuy = e
+        messi = e
+        ornob = e
+    end)
+
+local Toggle = Tabs.MainTab:AddToggle("MyToggle", {Title = "Farm Addmin", Default = false })
+
+    Toggle:OnChanged(function(e)
+        Lon = e
+    end)
+    
+    
+
+--   Dark   Light  Aqua Amethyst
+local Tabs = {
+    auuTab = Window:AddTab({ Title = "Tab Auto Boss", Icon = "" }),
+}
+
+local MiscFarm = Tabs.auuTab:AddSection("Farm Zama")
+
+
+Tabs.auuTab:AddButton({
+        Title = "Teleport orb spawn zama",
+        Description = "teleport orb spawn zama",
+        Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1574.0224609375, 21.828184127807617, -2411.581298828125)
+        end
+    })
+
+Tabs.auuTab:AddButton({
+        Title = "Teleport Observe Zama",
+        Description = " quan sát zama",
+        Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-52.63370132446289, 105.22813415527344, 615.8209228515625)
+        end
+    })
+    
+    Tabs.auuTab:AddButton({
+        Title = "Teleport spawn zama",
+        Description = "",
+        Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-100.78254699707031, 46.10209274291992, 923.0072021484375)
+        end
+    })
+    
+    Tabs.auuTab:AddButton({
+        Title = "Teleport ChestChest",
+        Description = "Tp rương",
+        Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-180.43434143066406, 45.609012603759766, 751.0321655273438)
+        end
+    })
+    
+    
+    --   Dark   Light  Aqua Amethyst
+local Tabs = {
+    loTab = Window:AddTab({ Title = "Setting Farm", Icon = "" }),
+}
+
+local Toggle = Tabs.loTab:AddToggle("MyToggle", {Title = "Fast Attack", Default = true })
+
+    Toggle:OnChanged(function(e)
+        Or = e
+        rrr = e
+        vvv = e
+        bbb = e
+        sss = e
+        ooo = e
+        www = e
+        yyy = e
+        qqq = e
+        hhh = e
+        depqua = e
+        nguqua = e
+        bnh = e
+        srhb = e
+        hiiy = e
+    end)
+    
+    local Toggle = Tabs.loTab:AddToggle("MyToggle", {Title = "Fast Attack Ape", Default = true })
+
+    Toggle:OnChanged(function(e)
+        ccccb = e
+    end)
+    
+    local Toggle = Tabs.loTab:AddToggle("MyToggle", {Title = "Anti afk", Default = true })
+
+    Toggle:OnChanged(function(e)
+        (kobtnoi)
+    end)
+    
+    --   Dark   Light  Aqua Amethyst
+local Tabs = {
+    pop = Window:AddTab({ Title = "Stars", Icon = "" }),
+}
+
+local Toggle = Tabs.pop:AddToggle("MyToggle", {Title = "Melee", Default = false })
+
+    Toggle:OnChanged(function(e)
+        Melee = e
+    end)
+    
+local Toggle = Tabs.pop:AddToggle("MyToggle", {Title = "Defense", Default = false })
+
+    Toggle:OnChanged(function(e)
+        Defense = e
+    end)
+    
+    local Toggle = Tabs.pop:AddToggle("MyToggle", {Title = "Sword", Default = false })
+
+    Toggle:OnChanged(function(e)
+        Sword = e
+    end)
+    
+    local Toggle = Tabs.pop:AddToggle("MyToggle", {Title = "DevilFruit", Default = false })
+
+    Toggle:OnChanged(function(e)
+        DevilFruit = e
+    end)
+    
+    --   Dark   Light  Aqua Amethyst
+local Tabs = {
+    op = Window:AddTab({ Title = "Raid", Icon = "" }),
+}
+
+local MiscFarm = Tabs.op:AddSection("Raid Teleport")
+
+Tabs.op:AddButton({
+        Title = "Chip Tp",
+        Description = "5 gems",
+        Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1598.32177734375, 85.30091094970703, -255.5386199951172)
+        end
+    })
+    
+    Tabs.op:AddButton({
+        Title = "Star raid tp",
+        Description = "bắt đầu raid tp",
+        Callback = function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1757.4517822265625, 54.37790298461914, -289.52734375)
+        end
+    })
+    
+   local MiscFarm = Tabs.op:AddSection("Raid Farm")
+   
+   local Toggle = Tabs.op:AddToggle("MyToggle", {Title = "Toggle", Default = false })
+
+    Toggle:OnChanged(function(flyy)
+         NN = flyy
+        getgenv().flly = flyy
+		if getgenv().flly then
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/CF-Trail/random/main/bypassedfly.lua"))()
+		else
+			for i, v in next, workspace:GetChildren() do
+				if v.IsA(v, "BasePart") and v.Name ~= "Terrain" then
+					v:Destroy()
+				end
+			end
+		end
+    end)
+   
+    --   Dark   Light  Aqua Amethyst
+local Tabs = {
+    ff = Window:AddTab({ Title = "Teleport", Icon = "" }),
+}
+
+Tabs.ff:AddButton({
+        Title = "Sea 2 T",
+        Description = "Tp",
+        Callback = function()
+        local TeleportService = game:GetService('TeleportService')
+				GameId = 12048634049
+				TeleportService:Teleport(GameId, game.Players.LocalPlayer)
+        end
+    })
+
+
+local plrs = game.Players
+
+    -- Fetch all player names
+    local playerNames = {}
+local players = plrs:GetPlayers()
+
+for _, player in ipairs(players) do
+    table.insert(playerNames, player.Name)
+end
+
+local Dropdown = Tabs.ff:AddDropdown("Dropdown", {
+        Title = "Teleport Player",
+        Values = playerNames,
+        Multi = false,
+        Default = playerNames[1] or "No Players",
+        Callback = function(selectedplrName)
+        local targetPlayer = plrs:FindFirstChild(selectedplrName)
+        
+        if targetPlayer and targetPlayer.Character and targetPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            -- Teleporting your character to the selected player's position
+            local targetPosition = targetPlayer.Character.HumanoidRootPart.Position
+            local localPlayerRoot = plrs.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+            
+            if localPlayerRoot then
+                localPlayerRoot.CFrame = CFrame.new(targetPosition)
+            end
+        end
+        print(selectedplrName)
+        end
+    })
+    
+    --   Dark   Light  Aqua Amethyst
+local Tabs = {
+    bb = Window:AddTab({ Title = "Visual", Icon = "" }),
+}
+
+
+local Toggle = Tabs.bb:AddToggle("MyToggle", {Title = "Esp Player", Default = false })
+
+    Toggle:OnChanged(function(Value)
+        ESPPlayer = Value
+		UpdatePlayerChams()
+    end)
+    
+   
+    
+    spawn(function()
+    while wait(2) do
+        if FlowerESP then
+            UpdateFlowerChams() 
+        end
+        if DevilFruitESP then
+            UpdateDevilChams() 
+        end
+        if ChestESP then
+            UpdateChestChams() 
+        end
+        if ESPPlayer then
+            UpdatePlayerChams()
+        end
+        if RealFruitESP then
+            UpdateRealFruitChams()
+        end
+    end
+end)
+
+
+
+spawn(function()
+    while wait(0) do
+        if vvv then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(1563.74268, 21.28652, -2432.6626, 0.960888624, -0, -0.27693513, 0, 1, -0, 0.27693513, 0, 0.960888624)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if bbb then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(1563.74268, 21.28652, -2432.6626, 0.960888624, -0, -0.27693513, 0, 1, -0, 0.27693513, 0, 0.960888624)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args))  then
+                    game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args)) 
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args)) 
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if www then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(-181.738083, 45.9509888, 760.513794, -0.999926567, 0.00457498292, 0.0112216556, 0.00457498292, 0.99998951, -2.56703825e-05, -0.0112216556, 2.56703825e-05, -0.999937057)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if Or then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(1563.74268, 21.28652, -2432.6626, 0.960888624, -0, -0.27693513, 0, 1, -0, 0.27693513, 0, 0.960888624)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if yyy then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(-181.738083, 45.9509888, 760.513794, -0.999926567, 0.00457498292, 0.0112216556, 0.00457498292, 0.99998951, -2.56703825e-05, -0.0112216556, 2.56703825e-05, -0.999937057)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+--   Dark   Light  Aqua Amethyst
+local Tabs = {
+    ff = Window:AddTab({ Title = "Player", Icon = "" }),
+}
+
+local MiscFarm = Tabs.ff:AddSection("Local Player")
+
+local Slider = Tabs.ff:AddSlider("Slider", {
+        Title = "Speed",
+        Description = "",
+        Default = 20,
+        Min = 0,
+        Max = 300,
+        Rounding = 1,
+        Callback = function(a)
+            game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = a
+        end
+    })
+    
+    local Slider = Tabs.ff:AddSlider("Slider", {
+        Title = "Jumpower",
+        Description = "",
+        Default = 50,
+        Min = 0,
+        Max = 300,
+        Rounding = 1,
+        Callback = function(a)
+            game.Players.LocalPlayer.Character.Humanoid.JumpPower = a
+        end
+    })
+    
+    
+    
+    
+
+spawn(function()
+    while wait(0) do
+        if rrr then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(1563.74268, 21.28652, -2432.6626, 0.960888624, -0, -0.27693513, 0, 1, -0, 0.27693513, 0, 0.960888624)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args))then
+                    game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if qqq then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(-181.738083, 45.9509888, 760.513794, -0.999926567, 0.00457498292, 0.0112216556, 0.00457498292, 0.99998951, -2.56703825e-05, -0.0112216556, 2.56703825e-05, -0.999937057)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if hhh then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(-181.738083, 45.9509888, 760.513794, -0.999926567, 0.00457498292, 0.0112216556, 0.00457498292, 0.99998951, -2.56703825e-05, -0.0112216556, 2.56703825e-05, -0.999937057)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if sss then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(1563.74268, 21.28652, -2432.6626, 0.960888624, -0, -0.27693513, 0, 1, -0, 0.27693513, 0, 0.960888624)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if ooo then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(-181.738083, 45.9509888, 760.513794, -0.999926567, 0.00457498292, 0.0112216556, 0.00457498292, 0.99998951, -2.56703825e-05, -0.0112216556, 2.56703825e-05, -0.999937057)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args))  then
+                    game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args)) 
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args)) 
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if depqua then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(16306.4609, 31.0790539, -296.535461, -0.0191953182, 0, 0.999815822, 0, 1, 0, -0.999815822, 0, -0.0191953182)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args))  then
+                    game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args)) 
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args)) 
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if nguqua then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(16306.4609, 31.0790539, -296.535461, -0.0191953182, 0, 0.999815822, 0, 1, 0, -0.999815822, 0, -0.0191953182)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if bnh then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(16306.4609, 31.0790539, -296.535461, -0.0191953182, 0, 0.999815822, 0, 1, 0, -0.999815822, 0, -0.0191953182)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if srhb then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(16306.4609, 31.0790539, -296.535461, -0.0191953182, 0, 0.999815822, 0, 1, 0, -0.999815822, 0, -0.0191953182)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if hiiy then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(16306.4609, 31.0790539, -296.535461, -0.0191953182, 0, 0.999815822, 0, 1, 0, -0.999815822, 0, -0.0191953182)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if NN then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(16495.1796875, 130.59805297851562, -795.048828125)
+            pcall(function()
+                    spawn(function()
+                    game:GetService("RunService").Heartbeat:Connect(function()
+                        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+                            setfflag("HumanoidParallelRemoveNoPhysics", "False")
+                            setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+                            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState(13)
+                        end
+                    end)
+                end)
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if Lon then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(17356.94921875, 171.47872924804688, -207.21731567382812)
+            pcall(function()
+                    spawn(function()
+                    game:GetService("RunService").Heartbeat:Connect(function()
+                        if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") then
+                            setfflag("HumanoidParallelRemoveNoPhysics", "False")
+                            setfflag("HumanoidParallelRemoveNoPhysicsNoSimulate2", "False")
+                            game:GetService("Players").LocalPlayer.Character.Humanoid:ChangeState()
+                        end
+                    end)
+                end)
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if cbcvv then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(17105.4844, 114.497215, -269.681946, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.WaterCombat.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if huhuhu then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(17105.4844, 114.497215, -269.681946, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.RoseScythe.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if bnbnuy then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(17105.4844, 114.497215, -269.681946, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.EnergyBlade.Combat.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if messi then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(17105.4844, 114.497215, -269.681946, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args))  then
+                    game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args)) 
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.TrueTripleKatana.Combat.RemoteEvent:FireServer(unpack(args)) 
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if ornob then
+            pcall(function()
+                local args = {
+                    [1] = 2,
+                    [2] = Vector3.new(17105.4844, 114.497215, -269.681946, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.Electric.kwdgags.RemoteEvent:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait(0) do
+        if ccccb then
+            pcall(function()
+                local args = {
+                    [1] = game:GetService("Players").LocalPlayer
+                }
+                
+                if game:GetService("Players").LocalPlayer.Character.Ape.Attack.Fire:FireServer(unpack(args)) then
+                    game:GetService("Players").LocalPlayer.Character.Ape.Attack.Fire:FireServer(unpack(args))
+                elseif game:GetService("Players").LocalPlayer.Character[Vtool]:FindFirstChild("Attack") then
+                    game:GetService("Players").LocalPlayer.Character.Ape.Attack.Fire:FireServer(unpack(args))
+                end
+            end) 
+        end
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if Melee then
+            pcall(function()
+                local args = {
+                    [1] = "Melee"
+                }
+
+                game:GetService("ReplicatedStorage").StatSystem.Points:FireServer(unpack(args))
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if Defense then
+            pcall(function()
+                local args = {
+                   [1] = "MaxHealth"
+                }
+
+                game:GetService("ReplicatedStorage").StatSystem.Points:FireServer(unpack(args))
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if Sword then
+            pcall(function()
+                local args = {
+                    [1] = "Sword"
+                }
+
+                game:GetService("ReplicatedStorage").StatSystem.Points:FireServer(unpack(args))
+            end)
+        end
+    end
+end)
+
+spawn(function()
+    while wait() do
+        if DevilFruit then
+            pcall(function()
+                local args = {
+                    [1] = "DevilFruit"
+                }
+
+                game:GetService("ReplicatedStorage").StatSystem.Points:FireServer(unpack(args))
+            end)
+        end
+    end
+end)
